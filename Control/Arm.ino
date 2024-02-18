@@ -15,7 +15,7 @@ int servo1PPos, servo2PPos, servo3PPos, servo5PPos, servo6PPos;
 
 //  Records positions
 int servo1SP[30], servo2SP[30], servo3SP[30], servo5SP[30], servo6SP[30];
-SoftwareSerial Bluetooth(3, 4);   // pin3 is for bluetooth receiving data, 4 for transmittting data
+SoftwareSerial Bluetooth(1, 0);   // pin3 is for bluetooth receiving data, 4 for transmittting data
 
 int speedDelay = 20;
 int index = 0;
@@ -23,36 +23,37 @@ String dataIn = "";
 
 
 void setup() {
+    Serial.begin(9600);
   // put your setup code here, to run once:
   // connect the board to the servos
   // pin 9 - 13
   servo1.attach(9);
-  servo2.attach(10);
-  servo3.attach(11);
+  servo2.attach(13);
+  servo3.attach(12);
 //   servo4.attach(8);
-  servo5.attach(12);
-  servo6.attach(13);
+  servo5.attach(11);
+  servo6.attach(10);
 
   Bluetooth.begin(38400);
-  Bluetooth.setTimeOut(1);
+  Bluetooth.setTimeout(1);
   delay(20);
 
   servo1PPos = 90;
   servo1.write(servo1PPos);
 
-  servo2PPos = 150;
+  servo2PPos = 70;
   servo2.write(servo2PPos);
 
-  servo3PPos = 35;
+  servo3PPos = 90;
   servo3.write(servo3PPos);
 
 //   servo4PPos = 140;
 //   servo4.write(servo4PPos);
 
-  servo5PPos = 85;
+  servo5PPos = 120;
   servo5.write(servo5PPos);
 
-  servo6PPos = 80;
+  servo6PPos = 65;
   servo6.write(servo6PPos); 
 }
 
@@ -62,6 +63,7 @@ void loop() {
   // check for input
   if (Bluetooth.available() > 0) {
     dataIn = Bluetooth.readString();
+    Serial.println(dataIn);
   }
 
   if (dataIn.startsWith("s1")) {
@@ -237,14 +239,14 @@ void mainRun() {
       }
 
       // Servo 1
-      if (servo1Pos[i] > servo1Pos[i + 1]) {
-        for (int j = servo1Pos[i]; j >= servo1Pos[i + 1]; j--) {
+      if (servo1SP[i] > servo1SP[i + 1]) {
+        for (int j = servo1SP[i]; j >= servo1SP[i + 1]; j--) {
           servo1.write(j);
           delay(speedDelay);
         }
       }
-      if (servo1Pos[i] < servo1Pos[i + 1]) {
-        for (int j = servo1Pos[i]; j <= servo1Pos[i + 1]; j++) {
+      if (servo1SP[i] < servo1SP[i + 1]) {
+        for (int j = servo1SP[i]; j <= servo1SP[i + 1]; j++) {
           servo1.write(j);
           delay(speedDelay);
         }
