@@ -15,7 +15,7 @@ int servo1PPos, servo2PPos, servo3PPos, servo5PPos, servo6PPos;
 
 //  Records positions
 int servo1SP[30], servo2SP[30], servo3SP[30], servo5SP[30], servo6SP[30];
-SoftwareSerial Bluetooth(3, 4)   // pin3 is for bluetooth receiving data, 4 for transmittting data
+SoftwareSerial Bluetooth(3, 4);   // pin3 is for bluetooth receiving data, 4 for transmittting data
 
 int speedDelay = 20;
 int index = 0;
