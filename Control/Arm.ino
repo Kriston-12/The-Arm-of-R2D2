@@ -5,16 +5,16 @@
 Servo servo1;
 Servo servo2;
 Servo servo3;
-Servo servo4;
+// Servo servo4;
 Servo servo5;
 Servo servo6;
 
 // Below are servos current position and previous position.
-int servo1Pos, servo2Pos, servo3Pos, servo4Pos, servo5Pos, servo6Pos;
-int servo1PPos, servo2PPos, servo3PPos, servo4PPos, servo5PPos, servo6PPos;
+int servo1Pos, servo2Pos, servo3Pos, servo5Pos, servo6Pos;
+int servo1PPos, servo2PPos, servo3PPos, servo5PPos, servo6PPos;
 
 //  Records positions
-int servo1SP[30], servo2SP[30], servo3SP[30], servo4SP[30], servo5SP[30], servo6SP[30];
+int servo1SP[30], servo2SP[30], servo3SP[30], servo5SP[30], servo6SP[30];
 SoftwareSerial Bluetooth(3, 4)   // pin3 is for bluetooth receiving data, 4 for transmittting data
 
 int speedDelay = 20;
@@ -25,12 +25,13 @@ String dataIn = "";
 void setup() {
   // put your setup code here, to run once:
   // connect the board to the servos
-  servo1.attach(5);
-  servo2.attach(6);
-  servo3.attach(7);
-  servo4.attach(8);
-  servo5.attach(9);
-  servo6.attach(10);
+  // pin 9 - 13
+  servo1.attach(9);
+  servo2.attach(10);
+  servo3.attach(11);
+//   servo4.attach(8);
+  servo5.attach(12);
+  servo6.attach(13);
 
   Bluetooth.begin(38400);
   Bluetooth.setTimeOut(1);
@@ -45,8 +46,8 @@ void setup() {
   servo3PPos = 35;
   servo3.write(servo3PPos);
 
-  servo4PPos = 140;
-  servo4.write(servo4PPos);
+//   servo4PPos = 140;
+//   servo4.write(servo4PPos);
 
   servo5PPos = 85;
   servo5.write(servo5PPos);
@@ -123,24 +124,24 @@ void loop() {
   }
 
   
-  if (dataIn.startsWith("s4")) {
-    String dataIn1 = dataIn.substring(2, dataIn.length());
-    servo4Pos = dataIn.toInt();
+//   if (dataIn.startsWith("s4")) {
+//     String dataIn1 = dataIn.substring(2, dataIn.length());
+//     servo4Pos = dataIn.toInt();
 
-    if (servo4PPos > servo4Pos) {
-      for (int i = servo4PPos; i >= servo4Pos; --i) {
-        servo4.write(i);
-        delay(20);
-      }
-    }
-    if (servo4PPos < servo4Pos) {
-      for (int i = servo4PPos; i <= servo4Pos; ++i) {
-        servo4.write(i);
-        delay(20);
-      }
-    }
-    servo4PPos = servo4Pos;
-  }
+//     if (servo4PPos > servo4Pos) {
+//       for (int i = servo4PPos; i >= servo4Pos; --i) {
+//         servo4.write(i);
+//         delay(20);
+//       }
+//     }
+//     if (servo4PPos < servo4Pos) {
+//       for (int i = servo4PPos; i <= servo4Pos; ++i) {
+//         servo4.write(i);
+//         delay(20);
+//       }
+//     }
+//     servo4PPos = servo4Pos;
+//   }
 
 
   if (dataIn.startsWith("s5")) {
@@ -190,7 +191,7 @@ void loop() {
     servo1SP[index] = servo1PPos;
     servo2SP[index] = servo2PPos;
     servo3SP[index] = servo3PPos;
-    servo4SP[index] = servo4PPos;
+    // servo4SP[index] = servo4PPos;
     servo5SP[index] = servo5PPos;
     servo6SP[index] = servo6PPos;
     index++;  
@@ -201,7 +202,7 @@ void loop() {
     memset(servo1SP, 0, sizeof(servo1SP)); 
     memset(servo2SP, 0, sizeof(servo2SP));
     memset(servo3SP, 0, sizeof(servo3SP));
-    memset(servo4SP, 0, sizeof(servo4SP));
+    // memset(servo4SP, 0, sizeof(servo4SP));
     memset(servo5SP, 0, sizeof(servo5SP));
     memset(servo6SP, 0, sizeof(servo6SP));
     index = 0;
@@ -277,19 +278,19 @@ void mainRun() {
         }
       }
 
-      // Servo 4
-      if (servo4SP[i] > servo4SP[i + 1]) {
-        for (int j = servo4SP[i]; j >= servo4SP[i + 1]; j--) {
-          servo4.write(j);
-          delay(speedDelay);
-        }
-      }
-      if (servo4SP[i] < servo4SP[i + 1]) {
-        for (int j = servo4SP[i]; j <= servo4SP[i + 1]; j++) {
-          servo4.write(j);
-          delay(speedDelay);
-        }
-      }
+    //   // Servo 4
+    //   if (servo4SP[i] > servo4SP[i + 1]) {
+    //     for (int j = servo4SP[i]; j >= servo4SP[i + 1]; j--) {
+    //       servo4.write(j);
+    //       delay(speedDelay);
+    //     }
+    //   }
+    //   if (servo4SP[i] < servo4SP[i + 1]) {
+    //     for (int j = servo4SP[i]; j <= servo4SP[i + 1]; j++) {
+    //       servo4.write(j);
+    //       delay(speedDelay);
+    //     }
+    //   }
 
       // Servo 5
       if (servo5SP[i] > servo5SP[i + 1]) {
